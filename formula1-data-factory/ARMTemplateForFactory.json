@@ -1,0 +1,98 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "formula1-data-factory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline-ingestion-formula1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "circuit-file-ingestion",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/Formula1-Project/Ingestion/1.Ingestion_circuit_file",
+							"baseParameters": {
+								"p_data_source": {
+									"value": "@variables('v_data_source')",
+									"type": "Expression"
+								},
+								"p_file_date": {
+									"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_databricks_formula1",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"concurrency": 1,
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"v_file_date": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"v_data_source": {
+						"type": "String",
+						"defaultValue": "ErgastAPI"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_databricks_formula1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_databricks_formula1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7137839292072843.3.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/7d33dc10-cedd-4461-9e0a-fa16ba57f21a/resourceGroups/kdshinde-RG/providers/Microsoft.Databricks/workspaces/Formula1-Demo-Project-DB",
+					"newClusterNodeType": "Standard_DS3_v2",
+					"newClusterNumOfWorker": "0",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "13.3.x-scala2.12",
+					"newClusterDriverNodeType": "Standard_DS3_v2",
+					"clusterOption": "Fixed",
+					"newClusterInitScripts": []
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
