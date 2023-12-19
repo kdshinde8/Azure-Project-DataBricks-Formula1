@@ -1,0 +1,13 @@
+{
+	"name": "ls_databricks_formula1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-7137839292072843.3.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/7d33dc10-cedd-4461-9e0a-fa16ba57f21a/resourceGroups/kdshinde-RG/providers/Microsoft.Databricks/workspaces/Formula1-Demo-Project-DB",
+			"existingClusterId": "1219-174738-ejy494es"
+		}
+	}
+}
