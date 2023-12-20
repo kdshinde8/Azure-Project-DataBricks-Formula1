@@ -4,6 +4,9 @@
 	"parameters": {
 		"factoryName": {
 			"value": "formula1-data-factory"
+		},
+		"ls_databricks_formula1_properties_typeProperties_existingClusterId": {
+			"value": "1220-175801-izo9wh4t"
 		}
 	}
 }
