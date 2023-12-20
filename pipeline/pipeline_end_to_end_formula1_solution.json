@@ -12,7 +12,13 @@
 						"referenceName": "pipeline-ingestion-formula1",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"v_file_date": {
+							"value": "@formatDateTime(pipeline().parameters.p_file_date, 'yyyy-MM-dd')",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -32,10 +38,22 @@
 						"referenceName": "pipeline-transformation-formula1",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"v_file_date": {
+							"value": "@formatDateTime(pipeline().parameters.p_file_date, 'yyyy-MM-dd')",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
+		"concurrency": 1,
+		"parameters": {
+			"p_file_date": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
