@@ -19,6 +19,10 @@
 			"type": "string",
 			"defaultValue": "1220-175801-izo9wh4t"
 		},
+		"trigger_tw_formula1_properties_pipeline_parameters_p_file_date": {
+			"type": "string",
+			"defaultValue": "@trigger().outputs.windowEndTime"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -54,6 +58,9 @@
 					},
 					"ls_databricks_formula1_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('ls_databricks_formula1_properties_typeProperties_existingClusterId')]"
+					},
+					"trigger_tw_formula1_properties_pipeline_parameters_p_file_date": {
+						"value": "[parameters('trigger_tw_formula1_properties_pipeline_parameters_p_file_date')]"
 					}
 				}
 			},

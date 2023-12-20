@@ -13,6 +13,9 @@
 		},
 		"ls_databricks_formula1_properties_typeProperties_existingClusterId": {
 			"value": "1220-175801-izo9wh4t"
+		},
+		"trigger_tw_formula1_properties_pipeline_parameters_p_file_date": {
+			"value": "@trigger().outputs.windowEndTime"
 		}
 	}
 }

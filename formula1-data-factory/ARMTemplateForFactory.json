@@ -18,6 +18,10 @@
 		"ls_databricks_formula1_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "1220-175801-izo9wh4t"
+		},
+		"trigger_tw_formula1_properties_pipeline_parameters_p_file_date": {
+			"type": "string",
+			"defaultValue": "@trigger().outputs.windowEndTime"
 		}
 	},
 	"variables": {
@@ -641,6 +645,40 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_tw_formula1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "pipeline_end_to_end_formula1_solution",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"p_file_date": "[parameters('trigger_tw_formula1_properties_pipeline_parameters_p_file_date')]"
+					}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Hour",
+					"interval": 168,
+					"startTime": "2021-03-14T22:00:00Z",
+					"endTime": "2021-04-26T22:00:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 1,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline_end_to_end_formula1_solution')]"
+			]
 		}
 	]
 }
