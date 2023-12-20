@@ -292,7 +292,7 @@
 					"authentication": "MSI",
 					"workspaceResourceId": "/subscriptions/7d33dc10-cedd-4461-9e0a-fa16ba57f21a/resourceGroups/kdshinde-RG/providers/Microsoft.Databricks/workspaces/Formula1-Demo-Project-DB",
 					"newClusterNodeType": "Standard_DS3_v2",
-					"newClusterNumOfWorker": "0",
+					"newClusterNumOfWorker": "1",
 					"newClusterSparkEnvVars": {
 						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
 					},
@@ -324,6 +324,98 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebookPath": "/Repos/Formula1-Project/trans/1.race_results",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_databricks_formula1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "drivers-standing-transformation",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "race-results-transformation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/Formula1-Project/trans/2.driver_standings",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_databricks_formula1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "constrcutors-standing-transformation",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "race-results-transformation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/Formula1-Project/trans/3.constructor_standings",
+							"baseParameters": {
+								"p_file_date": {
+									"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_databricks_formula1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "calculated-race-results-transformation",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/Formula1-Project/trans/5.calculated_race_results",
 							"baseParameters": {
 								"p_file_date": {
 									"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
