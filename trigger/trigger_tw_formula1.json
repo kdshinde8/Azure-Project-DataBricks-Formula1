@@ -2,7 +2,7 @@
 	"name": "trigger_tw_formula1",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipeline": {
 			"pipelineReference": {
 				"referenceName": "pipeline_end_to_end_formula1_solution",
