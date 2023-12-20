@@ -1,0 +1,29 @@
+{
+	"name": "trigger_tw_formula1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "pipeline_end_to_end_formula1_solution",
+				"type": "PipelineReference"
+			},
+			"parameters": {
+				"p_file_date": "@trigger().outputs.windowEndTime"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 168,
+			"startTime": "2021-03-14T22:00:00Z",
+			"endTime": "2021-04-26T22:00:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 1,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": []
+		}
+	}
+}
