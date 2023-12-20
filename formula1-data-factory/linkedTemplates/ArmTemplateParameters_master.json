@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "formula1-data-factory"
 		},
+		"ls_adls_formula1_accountKey": {
+			"value": ""
+		},
+		"ls_adls_formula1_properties_typeProperties_url": {
+			"value": "https://formula1demoprojectadls.dfs.core.windows.net/"
+		},
 		"ls_databricks_formula1_properties_typeProperties_existingClusterId": {
 			"value": "1220-175801-izo9wh4t"
 		},
