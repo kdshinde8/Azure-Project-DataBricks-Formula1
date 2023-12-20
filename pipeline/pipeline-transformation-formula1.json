@@ -1,0 +1,40 @@
+{
+	"name": "pipeline-transformation-formula1",
+	"properties": {
+		"activities": [
+			{
+				"name": "race-results-transformation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/Formula1-Project/trans/1.race_results",
+					"baseParameters": {
+						"p_file_date": {
+							"value": "@formatDateTime(pipeline().parameters.v_file_date, 'yyyy-MM-dd')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_databricks_formula1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"concurrency": 1,
+		"parameters": {
+			"v_file_date": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
